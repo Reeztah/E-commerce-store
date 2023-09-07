@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}DapperDeals - Registration{% endblock %}
+{% block page_content %}
+<main class="main">
+    <div class="page-header text-center" style="background-image: url({% static 'images/page-header-bg.jpg' %})">
+        <div class="container">
+            <h1 class="page-title">Registration<span>Page</span></h1>
+        </div><!-- End .container -->
+    </div><!-- End .page-header -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'products:index' %}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Registration</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+
+    <div class="container">
+        <div class="form-box">
+            {% if form.errors %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ form.errors }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true"><i class="icon-close"></i></span>
+                </button>
+            </div>
+            <br>
+            {% endif %}
+            <div class="form-tab">
+                <ul class="nav nav-pills nav-fill" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link" id="signin-tab-2" data-toggle="tab" href="#" role="tab"
+                           aria-controls="signin-2" aria-selected="false">Registration</a>
+                    </li>
+
+                </ul>
+                <div class="tab-pane fade show active" id="register-2" role="tabpanel"
+                     aria-labelledby="register-tab-2">
+                    <form action="{% url 'profiles:register' %}" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="{{ form.first_name.id_for_label }}">First Name</label>
+                            {{ form.first_name }}
+                        </div><!-- End .form-group -->
+                        <div class="form-group">
+                            <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+                            {{ form.last_name }}
+                        </div><!-- End .form-group -->
+                        <div class="form-group">
+                            <label for="{{ form.username.id_for_label }}">Username *</label>
+                            {{ form.username}}
+                        </div><!-- End .form-group -->
+                        <div class="form-group">
+                            <label for="{{ form.email.id_for_label }}">E-Mail</label>
+                            {{ form.email }}
+                        </div><!-- End .form-group -->
+                        <div class="form-group">
+                            <label for="{{ form.password1.id_for_label }}">Password *</label>
+                            {{ form.password1 }}
+                        </div><!-- End .form-group -->
+                        <div class="form-group">
+                            <label for="{{ form.password2.id_for_label }}">Confirm Password *</label>
+                            {{ form.password2 }}
+                        </div><!-- End .form-group -->
+                        <div class="form-footer">
+                            <button type="submit" class="btn btn-outline-primary-2">
+                                <span>SIGN UP</span>
+                                <i class="icon-long-arrow-right"></i>
+                            </button>
+
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="register-policy-2"
+                                       required>
+                                <label class="custom-control-label" for="register-policy-2">I agree to the
+                                    <a href="#">privacy policy</a> *</label>
+                            </div><!-- End .custom-checkbox -->
+                        </div><!-- End .form-footer -->
+                    </form>
+                    <div class="form-choice">
+                        <p class="text-center">or sign in with</p>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <a href="#" class="btn btn-login btn-g">
+                                    <i class="icon-google"></i>
+                                    Login With Google
+                                </a>
+                            </div><!-- End .col-6 -->
+                            <div class="col-sm-6">
+                                <a href="#" class="btn btn-login  btn-f">
+                                    <i class="icon-facebook-f"></i>
+                                    Login With Facebook
+                                </a>
+                            </div><!-- End .col-6 -->
+                        </div><!-- End .row -->
+                    </div><!-- End .form-choice -->
+                </div><!-- .End .tab-pane -->
+            </div>
+        </div>
+    </div>
+</main>
+<div class="container">
+    <hr class="mb-0">
+</div><!-- End .container -->
+{% endblock %}

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}{% endblock%}</title>
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="description" content="DapperDeals - Online store">
+    <meta name="Anton Vaganov" content="Store">
+    <meta name="apple-mobile-web-app-title" content="DapperDeals">
+    <meta name="application-name" content="DapperDeals">
+    <meta name="msapplication-TileColor" content="#cc9966">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="{% static 'css/line-awesome.min.css' %}">
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.countdown.css' %}">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/mainfront.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nouislider.css' %}">
+</head>
+<body>
+
+<div class="page-wrapper">
+    <header class="header header-intro-clearance header-4">
+        <div class="header-top">
+            <div class="container">
+                <div class="header-left">
+                    <a href="tel:#"><i class="icon-phone"></i>Call: +375 (29) 234 - 80 - 69</a>
+                </div><!-- End .header-left -->
+                <div class="header-right">
+                    <ul class="top-menu">
+                        <li>
+                            <a href="#">Links</a>
+                            <ul>
+                                <li>
+                                    <div class="header-dropdown">
+                                        <a href="#"><i class="icon-info-circle"></i>Information</a>
+                                        <div class="header-menu">
+                                            <ul>
+                                                <li><a href="{% url 'products:faq' %}"><i class="icon-long-arrow-right"></i>FAQ</a></li>
+                                                <li><a href="{% url 'products:contact' %}"><i class="icon-long-arrow-right"></i>Contact us</a></li>
+                                            </ul>
+                                        </div><!-- End .header-menu -->
+                                    </div>
+                                </li>
+                                <li>
+                                    {% if user.is_authenticated %}
+                                    <div class="header-dropdown">
+                                        <a href="#"><i class="icon-user"></i>{{ user.username }}</a>
+                                        <div class="header-menu">
+                                            <ul>
+                                                {% if user.is_superuser or user.is_staff %}
+                                                <li><a href="{% url 'admin:index' %}"><i class="icon-long-arrow-right"></i>Admin Panel</a></li>
+                                                {% endif %}
+                                                <li><a href="{% url 'profiles:profile' %}"><i class="icon-long-arrow-right"></i>Profile</a></li>
+                                                <li><a href="#"><i class="icon-long-arrow-right"></i>Shop Cart</a></li>
+                                                <li><a href="{% url 'profiles:logout' %}"><i class="icon-long-arrow-right"></i>Logout</a></li>
+                                            </ul>
+                                        </div><!-- End .header-menu -->
+                                    </div>
+                                </li>
+                                {% else %}
+                                <li>
+                                    <a href="{% url 'profiles:login' %}"><i class="icon-user"></i>Sign In</a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                    </ul><!-- End .top-menu -->
+                </div><!-- End .header-right -->
+            </div><!-- End .container -->
+        </div><!-- End .header-top -->
+        <div class="header-middle">
+            <div class="container">
+                <div class="header-left">
+                    <a href="{% url 'products:index' %}" class="logo">
+                        <img src="{% static 'images/main-logo.png' %}" alt="DapperDeals logo" width="200"
+                             height="25">
+                    </a>
+                </div><!-- End .header-left -->
+                <div class="header-center">
+                    <div class="header-search header-search-extended header-search-visible d-none d-lg-block">
+                        <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
+                        <form action="#" method="get">
+                            <div class="header-search-wrapper search-wrapper-wide">
+                                <label for="q" class="sr-only">Search</label>
+                                <button class="btn btn-primary" type="submit"><i class="icon-search"></i>
+                                </button>
+                                <input type="search" class="form-control" name="q" id="q"
+                                       placeholder="Search product ..." required>
+                            </div><!-- End .header-search-wrapper -->
+                        </form>
+                    </div><!-- End .header-search -->
+                </div>
+
+                <div class="header-right">
+                    <div class="wishlist">
+                        <a href="wishlist.html" title="Wishlist">
+                            <div class="icon">
+                                <i class="icon-heart-o"></i>
+                                <span class="wishlist-count badge">1</span>
+                            </div>
+                            <p>Wishlist</p>
+                        </a>
+                    </div>
+
+                    <div class="dropdown cart-dropdown">
+                        <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+                           aria-haspopup="true"
+                           aria-expanded="false" data-display="static">
+                            <div class="icon">
+                                <i class="icon-shopping-cart"></i>
+                                <span class="cart-count">1</span>
+                            </div>
+                            <p>Cart</p>
+                        </a>
+                    </div><!-- End.cart-dropdown -->
+                </div><!-- End .container -->
+            </div>
+        </div><!-- End .header-middle -->
+
+        <div class="header-bottom sticky-header">
+            <div class="container">
+                <div class="header-left">
+                    <div class="dropdown category-dropdown">
+                        <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+                           aria-haspopup="true"
+                           aria-expanded="false" data-display="static" title="Browse Categories">
+                            Categories <i class="icon-angle-down"></i>
+                        </a>
+
+                        <div class="dropdown-menu">
+                            <nav class="side-nav">
+                                <ul class="menu-vertical sf-arrows">
+                                    {% for category in categories %}
+                                    <li><a href="{% url 'products:category_view' category.pk %}">{{ category.name }}</a>
+                                    </li>
+                                    {% endfor %}
+
+                                </ul><!-- End .menu-vertical -->
+                            </nav><!-- End .side-nav -->
+                        </div><!-- End .dropdown-menu -->
+                    </div><!-- End .category-dropdown -->
+                </div><!-- End .header-left -->
+
+                <div class="header-center">
+                    <nav class="main-nav">
+                        <ul class="menu sf-arrows">
+                            <li>
+                                <a href="#" class="sf-with-ul"><i class="icon-apple"> iPhone</i></a>
+                                <ul>
+                                    {% for iphone in iphones %}
+                                    <li><a href="{% url 'products:product_detail' iphone.pk %}"><b>NEW!</b> {{ iphone.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" class="sf-with-ul"><i class="icon-apple"> Mac</i></a>
+                                <ul>
+                                    {% for mac in macs %}
+                                    <li><a href="{% url 'products:product_detail' mac.pk %}"><b>NEW!</b> {{ mac.name }}</a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="" class="sf-with-ul"><i class="icon-apple"> iPad</i></a>
+                                <ul>
+                                    {% for ipad in ipads %}
+                                    <li><a href="{% url 'products:product_detail' ipad.pk %}"><b>NEW!</b> {{ ipad.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" class="sf-with-ul"><i class="icon-apple"> Apple Watch</i></a>
+                                <ul>
+                                    {% for watch in watches %}
+                                    <li><a href="{% url 'products:product_detail' watch.pk %}"><b>NEW!</b> {{ watch.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" class="sf-with-ul"><i class="icon-apple"> AirPods</i></a>
+                                <ul>
+                                    {% for air in airpods %}
+                                    <li><a href="{% url 'products:product_detail' air.pk %}"><b>NEW!</b> {{ air.name }}</a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        </ul><!-- End .menu -->
+                    </nav><!-- End .main-nav -->
+                </div><!-- End .header-center -->
+
+                <div class="header-right">
+                    <p><i class="icon-cc-visa"></i>Clearance<span class="highlight">&nbsp;Up to 15% Off</span>
+                    </p>
+                </div>
+            </div><!-- End .container -->
+        </div><!-- End .header-bottom -->
+    </header><!-- End .header -->
+
+    <!--    <div class="mb-3"></div>&lt;!&ndash; End .mb-5 &ndash;&gt;-->
+
+    {% block page_content %}
+
+    {% endblock %}
+
+
+    <div class="footer-middle border-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-lg-6">
+                    <div class="widget widget-about">
+                        <p>Qualified Purchasers receive an Apple Gift Card when they purchase an eligible Mac or
+                            iPad at a Qualifying Location. Only one Apple Gift Card per eligible Mac or iPad per
+                            Qualified Purchaser. Offer subject to availability. While supplies last.</p>
+                        <div class="widget-about-info">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-4">
+                                    <span class="widget-about-title">Got Question? Call us 24/7</span>
+                                    <a href="tel:#">+375 (29) 234 - 80 - 69</a>
+                                </div><!-- End .col-sm-6 -->
+                                <div class="col-sm-6 col-md-8">
+                                    <span class="widget-about-title">Payment Method</span>
+                                    <figure class="footer-payments">
+                                        <img src="{% static '/images/footer-payment.png' %}" alt="Payment methods"
+                                             width="272"
+                                             height="20">
+                                    </figure><!-- End .footer-payments -->
+                                </div><!-- End .col-sm-6 -->
+                            </div><!-- End .row -->
+                        </div><!-- End .widget-about-info -->
+                    </div><!-- End .widget about-widget -->
+                </div><!-- End .col-sm-12 col-lg-3 -->
+
+                <div class="col-sm-4 col-lg-2">
+                    <div class="widget">
+                        <h4 class="widget-title">Information</h4><!-- End .widget-title -->
+
+                        <ul class="widget-list">
+                            <li><a href="{% url 'products:faq' %}">FAQ</a></li>
+                            <li><a href="{% url 'products:contact' %}">Contact us</a></li>
+                        </ul><!-- End .widget-list -->
+                    </div><!-- End .widget -->
+                </div><!-- End .col-sm-4 col-lg-3 -->
+
+                <div class="col-sm-4 col-lg-2">
+                    <div class="widget">
+                        <h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
+
+                        <ul class="widget-list">
+                            <li><a href="#">Payment Methods</a></li>
+                            <li><a href="#">Money-back guarantee!</a></li>
+                            <li><a href="#">Returns</a></li>
+                            <li><a href="#">Shipping</a></li>
+                            <li><a href="#">Terms and conditions</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul><!-- End .widget-list -->
+                    </div><!-- End .widget -->
+                </div><!-- End .col-sm-4 col-lg-3 -->
+
+                <div class="col-sm-4 col-lg-2">
+                    <div class="widget">
+                        <h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+                        <ul class="widget-list">
+                            {% if user.is_authenticated %}
+                            <li><a href="#">View Cart</a></li>
+                            <li><a href="#">My Wishlist</a></li>
+                            <li><a href="{% url 'profiles:profile' %}">Profile</a></li>
+                            {% else %}
+                            <li><a href="{% url 'profiles:login' %}">Sign In</a></li>
+                            {% endif %}
+                        </ul><!-- End .widget-list -->
+                    </div><!-- End .widget -->
+                </div><!-- End .col-sm-64 col-lg-3 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .footer-middle -->
+
+    <div class="footer-bottom">
+        <div class="container">
+            <p class="footer-copyright">Copyright © 2023 DapperDeals. All Rights Reserved.</p>
+            <!-- End .footer-copyright -->
+            <ul class="footer-menu">
+                <li><a href="#">Terms Of Use</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+            </ul><!-- End .footer-menu -->
+
+            <div class="social-icons social-icons-color">
+                <span class="social-label">Social Media DapperDeals</span>
+                <a href="https://facebook.com" class="social-icon social-facebook" title="Facebook" target="_blank"><i
+                        class="icon-facebook-f"></i></a>
+                <a href="https://twitter.com" class="social-icon social-twitter" title="Twitter" target="_blank"><i
+                        class="icon-twitter"></i></a>
+                <a href="https://instagram.com" class="social-icon social-instagram" title="Instagram"
+                   target="_blank"><i
+                        class="icon-instagram"></i></a>
+                <a href="https://youtube.com" class="social-icon social-youtube" title="Youtube" target="_blank"><i
+                        class="icon-youtube"></i></a>
+                <a href="https://pinterest.com" class="social-icon social-pinterest" title="Pinterest"
+                   target="_blank"><i
+                        class="icon-pinterest"></i></a>
+            </div><!-- End .social-icons -->
+        </div><!-- End .container -->
+    </div><!-- End .footer-bottom -->
+</div><!-- End .page-wrapper -->
+<button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+
+<!-- Plugins JS File -->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/jquery.hoverIntent.min.js' %}"></script>
+<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'js/superfish.min.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-input-spinner.js' %}"></script>
+<script src="{% static 'js/jquery.plugin.min.js' %}"></script>
+<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'js/jquery.countdown.min.js' %}"></script>
+<script src="{% static 'js/jquery.elevateZoom.min.js' %}"></script>
+<script src="{% static 'js/wNumb.js' %}"></script>
+<script src="{% block script %}{% endblock %}"></script>
+<!-- Main JS File -->
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/mainfront.js' %}"></script>
+</body>
+
+</html>
