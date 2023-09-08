@@ -1,7 +1,9 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
 from profiles.forms import UserLoginForm, UserRegistrationForm, UserProfileForm, UserPasswordChangeForm
 from django.contrib import auth, messages
+from django.contrib.auth import update_session_auth_hash
 
 
 def login(request):
@@ -33,26 +35,40 @@ def register(request):
     return render(request, 'profiles/register.html', context)
 
 
+@login_required()
 def profile(request):
     if request.method == 'POST':
         form = UserProfileForm(data=request.POST, instance=request.user)
-        password_form = UserPasswordChangeForm(data=request.POST, user=request.user)
-        if form.is_valid() and password_form.is_valid():
+        if form.is_valid():
             form.save()
-            password_form.save()
             messages.success(request, 'Данные успешно изменены. ')
             return HttpResponseRedirect(reverse('profiles:profile'))
     else:
         form = UserProfileForm(instance=request.user)
-        password_form = UserPasswordChangeForm(user=request.user)
 
     context = {
         'form': form,
-        'password_form': password_form,
     }
     return render(request, 'profiles/profile.html', context)
 
+@login_required()
+def change_password(request):
+    if request.method == 'POST':
+        password_form = UserPasswordChangeForm(data=request.POST, user=request.user)
+        if password_form.is_valid():
+            password_form.save()
+            update_session_auth_hash(request=request, user=request.user)
+            messages.success(request, 'Пароль успешно изменен!')
+            return HttpResponseRedirect(reverse('profiles:profile'))
+    else:
+        password_form = UserPasswordChangeForm(user=request.user)
 
+    context = {
+        'password_form': password_form,
+    }
+    return render(request, 'profiles/password_change.html', context)
+
+@login_required()
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect(reverse('products:index'))

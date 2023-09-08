@@ -41,11 +41,11 @@
                     <form action="{% url 'profiles:register' %}" method="post">
                         {% csrf_token %}
                         <div class="form-group">
-                            <label for="{{ form.first_name.id_for_label }}">First Name</label>
+                            <label for="{{ form.first_name.id_for_label }}">First Name *</label>
                             {{ form.first_name }}
                         </div><!-- End .form-group -->
                         <div class="form-group">
-                            <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+                            <label for="{{ form.last_name.id_for_label }}">Last Name *</label>
                             {{ form.last_name }}
                         </div><!-- End .form-group -->
                         <div class="form-group">
@@ -53,7 +53,7 @@
                             {{ form.username}}
                         </div><!-- End .form-group -->
                         <div class="form-group">
-                            <label for="{{ form.email.id_for_label }}">E-Mail</label>
+                            <label for="{{ form.email.id_for_label }}">E-Mail *</label>
                             {{ form.email }}
                         </div><!-- End .form-group -->
                         <div class="form-group">

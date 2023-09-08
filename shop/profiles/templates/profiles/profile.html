@@ -38,12 +38,11 @@
                             </li>
                             {% endif %}
                             <li class="nav-item">
-                                <a class="nav-link" id="tab-address-link" data-toggle="tab" href="#tab-info"
-                                   role="tab" aria-controls="tab-address" aria-selected="false">Account Information</a>
+                                <a class="nav-link" id="tab-account-link" data-toggle="tab" href="#tab-account"
+                                   role="tab" aria-controls="tab-account" aria-selected="false">Account Information</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="tab-account-link" data-toggle="tab" href="#tab-account"
-                                   role="tab" aria-controls="tab-account" aria-selected="false">Account Details</a>
+                                <a class="nav-link" href="{% url 'profiles:change_password' %}">Change Password</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'profiles:logout' %}">Sign Out</a>
@@ -54,14 +53,20 @@
                     <div class="col-md-8 col-lg-9">
                         <div class="tab-content">
                             {% if messages or form.errors %}
-                            {% for message in messages %}
                             <div class="alert {% if messages %} alert-success {% else %} alert-warning {% endif %} alert-dismissible fade show"
                                  role="alert">
+                                {% if messages %}
+                                {% for message in messages %}
                                 {{ message }}
+                                {% endfor %}
+                                {% else %}
+                                {{ form.non_field.errors }}
+                                {% endif %}
+
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true"><i class="icon-close"></i></span>
                                 </button>
-                                {% endfor %}
+
                             </div>
                             <br>
                             {% endif %}
@@ -74,32 +79,18 @@
                                     <br>
                                     From your account dashboard you can view your <a href="#tab-orders"
                                                                                      class="tab-trigger-link">recent
-                                        orders</a>, manage your <a href="#tab-info" class="tab-trigger-link">shipping
-                                        addresses and account information</a>, and <a href="#tab-account"
-                                                                                      class="tab-trigger-link">edit
-                                        your password and account details</a>.</p>
-                            </div><!-- .End .tab-pane -->
-
-                            <div class="tab-pane fade" id="tab-orders" role="tabpanel"
-                                 aria-labelledby="tab-orders-link">
-                                <p>No order has been made yet.</p>
-                                <a href="{% url 'products:index' %}"
-                                   class="btn btn-outline-primary-2"><span>GO SHOP</span><i
-                                        class="icon-long-arrow-right"></i></a>
-                            </div><!-- .End .tab-pane -->
-
-
-                            <div class="tab-pane fade" id="tab-info" role="tabpanel"
-                                 aria-labelledby="tab-info-link">
-                                <p>The following addresses will be used on the checkout page by default.</p>
-
+                                        orders</a>, manage your <a href="#tab-account" class="tab-trigger-link">shipping
+                                        addresses and account information</a>, and <a href="{% url 'profiles:change_password' %}">edit
+                                        your password</a>.</p>
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="card card-dashboard">
                                             <div class="card-body">
-                                                <h3 class="card-title">Account Information</h3><!-- End .card-title -->
+                                                <h3 class="card-title">Account Information</h3>
+                                                <!-- End .card-title -->
 
-                                                <p>User Name: {{ user.username }}<br>
+                                                <p>Account status: {% if user.is_active %} active {% else %} inactive {% endif %}<br>
+                                                    User Name: {{ user.username }}<br>
                                                     First Name: {{ user.first_name }}<br>
                                                     Last Name: {{ user.last_name }}<br>
                                                     Mail: {{ user.email }}<br>
@@ -127,6 +118,13 @@
                                 </div><!-- End .row -->
                             </div><!-- .End .tab-pane -->
 
+                            <div class="tab-pane fade" id="tab-orders" role="tabpanel"
+                                 aria-labelledby="tab-orders-link">
+                                <p>No order has been made yet.</p>
+                                <a href="{% url 'products:index' %}"
+                                   class="btn btn-outline-primary-2"><span>GO SHOP</span><i
+                                        class="icon-long-arrow-right"></i></a>
+                            </div><!-- .End .tab-pane -->
                             <div class="tab-pane fade" id="tab-account" role="tabpanel"
                                  aria-labelledby="tab-account-link">
                                 <h3 class="card-title"><i class="icon-user"></i> Account Information</h3><br>
@@ -181,14 +179,6 @@
                                             {{ form.flat }}
                                         </div>
                                     </div>
-                                    <br>
-                                    <h3 class="card-title"><i class="icon-cog"></i> Password Change</h3><br>
-                                    <label for="{{ password_form.old_password.id_for_label }}">Current password (leave blank to leave unchanged)</label>
-                                    {{ password_form.old_password }}
-                                    <label for ="{{ password_form.new_password1.id_for_label }}">New password (leave blank to leave unchanged)</label>
-                                    {{ password_form.new_password1 }}
-                                    <label for ="{{ password_form.new_password2.id_for_label }}">Confirm new password</label>
-                                    {{ password_form.new_password2 }}
                                     <button type="submit" class="btn btn-outline-primary-2">
                                         <span>SAVE CHANGES</span>
                                         <i class="icon-long-arrow-right"></i>
