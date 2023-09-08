@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
-from profiles.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
+from profiles.forms import UserLoginForm, UserRegistrationForm, UserProfileForm, UserPasswordChangeForm
 from django.contrib import auth, messages
 
 
@@ -36,13 +36,20 @@ def register(request):
 def profile(request):
     if request.method == 'POST':
         form = UserProfileForm(data=request.POST, instance=request.user)
-        if form.is_valid():
+        password_form = UserPasswordChangeForm(data=request.POST, user=request.user)
+        if form.is_valid() and password_form.is_valid():
             form.save()
+            password_form.save()
             messages.success(request, 'Данные успешно изменены. ')
             return HttpResponseRedirect(reverse('profiles:profile'))
     else:
         form = UserProfileForm(instance=request.user)
-    context = {'form': form}
+        password_form = UserPasswordChangeForm(user=request.user)
+
+    context = {
+        'form': form,
+        'password_form': password_form,
+    }
     return render(request, 'profiles/profile.html', context)
 
 
