@@ -35,7 +35,7 @@ def register(request):
     return render(request, 'profiles/register.html', context)
 
 
-@login_required()
+@login_required
 def profile(request):
     if request.method == 'POST':
         form = UserProfileForm(data=request.POST, instance=request.user)
@@ -51,7 +51,7 @@ def profile(request):
     }
     return render(request, 'profiles/profile.html', context)
 
-@login_required()
+@login_required
 def change_password(request):
     if request.method == 'POST':
         password_form = UserPasswordChangeForm(data=request.POST, user=request.user)
@@ -68,7 +68,7 @@ def change_password(request):
     }
     return render(request, 'profiles/password_change.html', context)
 
-@login_required()
+@login_required
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect(reverse('products:index'))

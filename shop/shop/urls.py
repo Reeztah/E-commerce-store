@@ -8,8 +8,9 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('products.urls', namespace='products')),
-    # по корневому адресу .../включает в себя урлы с products app
-    path('', include('profiles.urls', namespace='profiles')),
+    path('users/', include('profiles.urls', namespace='profiles')),
+    path('wishlist/', include('wishlist.urls', namespace='wishlist')),
+
 ]
 
 if settings.DEBUG:

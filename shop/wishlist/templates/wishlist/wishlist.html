@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ user.username }} Wishlist {% endblock %}
+{% block page_content %}
+<main class="main">
+    <div class="page-header text-center" style="background-image: url({%static 'images/page-header-bg.jpg' %})">
+        <div class="container">
+            <h1 class="page-title">{{ user.username }}<span>Wishlist</span></h1>
+        </div><!-- End .container -->
+    </div><!-- End .page-header -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'products:index' %}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Wishlist</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+    <div class="page-content">
+        <div class="container">
+            <table class="table table-wishlist table-mobile">
+                <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Stock Status</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    {% if wishlist_items %}
+                    {% for item in wishlist_items %}
+                    <td class="product-col">
+                        <div class="product">
+                            <figure class="product-media">
+                                <a href="#">
+                                    <img src="/media/{{ item.product.image }}" alt="Product image">
+                                </a>
+                            </figure>
+
+                            <h3 class="product-title">
+                                <a href="#">{{ item.product.name }}</a>
+                            </h3><!-- End .product-title -->
+                        </div><!-- End .product -->
+                    </td>
+                    <td class="price-col">{{ item.product.price }} $</td>
+                    <td class="stock-col"><span class="in-stock">In stock</span></td>
+                    <td class="action-col">
+                        <button class="btn btn-block btn-outline-primary-2"><i class="icon-cart-plus"></i>Add to
+                            Cart
+                        </button>
+                    </td>
+                    <td class="remove-col">
+                        <button class="btn-remove"><a href="{% url 'wishlist:remove_item' item.product.id %}" class="btn-remove">
+                            <i class="icon-close"></i></a></button>
+
+                    </td>
+                </tr>
+                <tr>
+                    {% endfor %}
+                    {% else %}
+                    <td class="product-col">
+                        <div class="product">
+                            <h3 class="product-title">
+                                Список избранного пуст<br><br>
+                                <a href="{% url 'products:index' %}"
+                                   class="btn btn-outline-primary-2"><span>GO SHOP</span><i
+                                        class="icon-long-arrow-right"></i></a>
+                            </h3><!-- End .product-title -->
+                        </div><!-- End .product -->
+                    </td>
+                    {% endif %}
+                </tbody>
+            </table><!-- End .table table-wishlist -->
+        </div><!-- End .container -->
+    </div><!-- End .page-content -->
+</main><!-- End .main -->
+{% endblock %}
