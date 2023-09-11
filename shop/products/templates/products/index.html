@@ -85,7 +85,7 @@
                         </a>
 
                         <div class="product-action-vertical">
-                            <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
+                            <a href="{% url 'wishlist:add_item' product.id %}" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
                         </div><!-- End .product-action -->
 
                         <div class="product-action">
