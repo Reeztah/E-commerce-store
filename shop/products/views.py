@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from wishlist.models import Wishlist
 from products.models import ProductCategory, Product
 
 
@@ -21,9 +21,21 @@ def contact(request):
 def product_detail(request, pk):
     product = Product.objects.get(pk=pk)
     category_name = product.category  # Получить категорию товара
+
+    if request.user.is_authenticated:
+        wishlist = Wishlist.objects.filter(user=request.user)
+        product_in_wishlist = wishlist.filter(wishlistitem__product=product).exists()
+        context = {
+            'product_in_wishlist': product_in_wishlist,
+            'category_name': category_name,
+            'product': product,
+        }
+        return render(request, 'products/product_view.html', context)
+
     context = {
         'product': product,
         'category_name': category_name,
+
     }
     return render(request, 'products/product_view.html', context)
 

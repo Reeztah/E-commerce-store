@@ -28,22 +28,18 @@
                             <div class="col-6 col-md-4 col-lg-4">
                                 <div class="product product-7 text-center">
                                     <figure class="product-media">
-                                        <span class="product-label label-new">Popular</span>
+                                        <span class="product-label {% if product.new_product %} label-new {% else %} label-top {% endif %}">
+                                            {% if product.new_product %} <i class="icon-apple"></i> NEW! {% else %} <i class="icon-apple"></i> TOP {% endif %}
+                                        </span>
                                         <a href="{% url 'products:product_detail' product.pk %}">
                                             <img src="/media/{{ product.image }}"
                                                  alt="Product image"
                                                  class="product-image">
                                         </a>
-
-                                        <div class="product-action-vertical">
-                                            <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                        </div><!-- End .product-action-vertical -->
-
                                         <div class="product-action">
                                             <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
                                         </div><!-- End .product-action -->
                                     </figure><!-- End .product-media -->
-
                                     <div class="product-body">
                                         <div class="product-cat">
                                             <a href="#">{{ category.name }}</a>

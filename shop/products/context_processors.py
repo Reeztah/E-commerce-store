@@ -1,5 +1,5 @@
 from products.models import ProductCategory, Product
-
+from wishlist.models import Wishlist, WishlistItem
 
 def categories(request):
     categories = ProductCategory.objects.all()
@@ -19,3 +19,12 @@ def footer_filter(request):
         'watches': watches,
         'airpods': airpods,
     }
+
+def wishlist_count(request):
+    if request.user.is_authenticated:
+        wishlist = Wishlist.objects.get(user=request.user)
+        wishlist_item_count = WishlistItem.objects.filter(wishlist=wishlist).count()
+    else:
+        return {}
+
+    return {'wishlist_count': wishlist_item_count}

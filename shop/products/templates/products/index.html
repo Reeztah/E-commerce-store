@@ -78,16 +78,11 @@
                 {% for product in new_products %}
                 <div class="product product-2">
                     <figure class="product-media">
-                        <span class="product-label label-circle label-new">New!</span>
+                        <span class="product-label label-new"><i class="icon-apple"></i> NEW!</span>
                         <a href="{% url 'products:product_detail' product.pk %}">
                             <img src="/media/{{ product.image }}" alt="Product image"
                                  class="product-image">
                         </a>
-
-                        <div class="product-action-vertical">
-                            <a href="{% url 'wishlist:add_item' product.id %}" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                        </div><!-- End .product-action -->
-
                         <div class="product-action">
                             <a href="#" class="btn-product btn-cart"
                                title="Add to cart"><span>add to cart</span></a>

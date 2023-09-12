@@ -65,6 +65,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'products.context_processors.categories',
                 'products.context_processors.footer_filter',
+                'products.context_processors.wishlist_count',
             ],
         },
     },

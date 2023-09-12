@@ -60,7 +60,8 @@
                                                 {% if user.is_superuser or user.is_staff %}
                                                 <li><a href="{% url 'admin:index' %}"><i class="icon-long-arrow-right"></i>Admin Panel</a></li>
                                                 {% endif %}
-                                                <li><a href="{% url 'profiles:profile' %}"><i class="icon-long-arrow-right"></i>Profile</a></li>
+                                                <li><a href="{% url 'profiles:profile' %}"><i class="icon-long-arrow-right"></i>My Profile</a></li>
+                                                <li><a href="{% url 'wishlist:wishlist' %}"><i class="icon-long-arrow-right"></i>My Wishlist</a></li>
                                                 <li><a href="#"><i class="icon-long-arrow-right"></i>Shop Cart</a></li>
                                                 <li><a href="{% url 'profiles:logout' %}"><i class="icon-long-arrow-right"></i>Logout</a></li>
                                             </ul>
@@ -106,7 +107,9 @@
                         <a href="{% url 'wishlist:wishlist' %}" title="Wishlist">
                             <div class="icon">
                                 <i class="icon-heart-o"></i>
-                                <span class="wishlist-count badge">1</span>
+                                {% if user.is_authenticated %}
+                                <span class="wishlist-count badge">{{ wishlist_count }}</span>
+                                {% endif %}
                             </div>
                             <p>Wishlist</p>
                         </a>
@@ -273,9 +276,9 @@
                         <h4 class="widget-title">My Account</h4><!-- End .widget-title -->
                         <ul class="widget-list">
                             {% if user.is_authenticated %}
-                            <li><a href="#">View Cart</a></li>
-                            <li><a href="#">My Wishlist</a></li>
-                            <li><a href="{% url 'profiles:profile' %}">Profile</a></li>
+                            <li><a href="#">Shop Cart</a></li>
+                            <li><a href="{% url 'wishlist:wishlist' %}">My Wishlist</a></li>
+                            <li><a href="{% url 'profiles:profile' %}">My Profile</a></li>
                             {% else %}
                             <li><a href="{% url 'profiles:login' %}">Sign In</a></li>
                             {% endif %}

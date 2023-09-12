@@ -24,7 +24,9 @@
                             <div class="col-md-6">
                                 <div class="product-gallery">
                                     <figure class="product-main-image">
-                                        <span class="product-label label-top">Top</span>
+                                        <span class="product-label {% if product.new_product%} label-new {% else %} label-top {% endif %}">
+                                            {% if product.new_product %} <i class="icon-apple"></i> NEW! {% else %} <i class="icon-apple"></i> TOP {% endif %}
+                                        </span>
                                         <img id="product-zoom" src="/media/{{ product.image }}"
                                              data-zoom-image="/media/{{ product.image }}"
                                              alt="product image">
@@ -94,10 +96,21 @@
 
                                             <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
                                         </div><!-- End .details-action-col -->
-
-                                        <div class="details-action-wrapper">
-                                            <a href="{% url 'wishlist:add_item' product.id %}" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
-                                        </div><!-- End .details-action-wrapper -->
+                                        {% if user.is_authenticated %}
+                                            {% if product_in_wishlist %}
+                                                <div class="details-action-wrapper">
+                                                    <a href="{% url 'wishlist:remove_item' product.id %}" class="btn-product btn-wishlist" title="Wishlist"><span>Remove from Wishlist</span></a>
+                                                </div>
+                                            {% else %}
+                                                <div class="details-action-wrapper">
+                                                    <a href="{% url 'wishlist:add_item' product.id %}" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
+                                                </div><!-- End .details-action-wrapper -->
+                                            {% endif %}
+                                        {% else %}
+                                            <div class="details-action-wrapper">
+                                                <a href="{% url 'profiles:login' %}" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
+                                            </div>
+                                        {% endif %}
                                     </div><!-- End .product-details-action -->
 
                                     <div class="product-details-footer details-footer-col">

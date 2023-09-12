@@ -16,7 +16,7 @@ def add_to_wishlist(request, product_id):
         wishlist_item.quantity += 1
         wishlist_item.save()
 
-    return HttpResponseRedirect(reverse('wishlist:wishlist'))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @login_required
@@ -26,7 +26,8 @@ def del_from_wishlist(request, product_id):
     wishlist = Wishlist.objects.get(user=user)
     wishlist_item = WishlistItem.objects.get(wishlist=wishlist, product=product)
     wishlist_item.delete()
-    return HttpResponseRedirect(reverse('wishlist:wishlist'))
+
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @login_required
