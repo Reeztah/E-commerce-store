@@ -4,7 +4,7 @@ from django.urls import reverse
 from profiles.forms import UserLoginForm, UserRegistrationForm, UserProfileForm, UserPasswordChangeForm
 from django.contrib import auth, messages
 from django.contrib.auth import update_session_auth_hash
-
+from wishlist.models import Wishlist
 
 def login(request):
     if request.method == 'POST':
@@ -26,8 +26,10 @@ def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(data=request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
             messages.success(request, 'Вы успешно зарегистрировались!')
+            if not Wishlist.objects.filter(user=user).exists():
+                Wishlist.objects.create(user=user)
             return HttpResponseRedirect(reverse('profiles:login'))
     else:
         form = UserRegistrationForm()
