@@ -1,5 +1,7 @@
 from products.models import ProductCategory, Product
 from wishlist.models import Wishlist, WishlistItem
+from shopcart.models import ShopCart, ShopCartItem
+
 
 def categories(request):
     categories = ProductCategory.objects.all()
@@ -20,6 +22,7 @@ def footer_filter(request):
         'airpods': airpods,
     }
 
+
 def wishlist_count(request):
     if request.user.is_authenticated:
         wishlist = Wishlist.objects.get(user=request.user)
@@ -28,3 +31,13 @@ def wishlist_count(request):
         return {}
 
     return {'wishlist_count': wishlist_item_count}
+
+
+def shopcart_count(request):
+    if request.user.is_authenticated:
+        shopcart = ShopCart.objects.get(user=request.user)
+        shopcart_item_count = ShopCartItem.objects.filter(shopcart=shopcart).count()
+    else:
+        return {}
+
+    return {'shopcart_count': shopcart_item_count}

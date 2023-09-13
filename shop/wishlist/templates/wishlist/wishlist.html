@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}{{ user.username }} Wishlist {% endblock %}
+{% block title %}Dapper Deals | Интернет-магазин техники Apple | {{ user.username }} | wishlist {% endblock %}
 {% block page_content %}
 <main class="main">
     <div class="page-header text-center" style="background-image: url({%static 'images/page-header-bg.jpg' %})">
@@ -16,6 +16,7 @@
             </ol>
         </div><!-- End .container -->
     </nav><!-- End .breadcrumb-nav -->
+    {% if wishlist_items %}
     <div class="page-content">
         <div class="container">
             <table class="table table-wishlist table-mobile">
@@ -31,51 +32,53 @@
 
                 <tbody>
                 <tr>
-                    {% if wishlist_items %}
                     {% for item in wishlist_items %}
                     <td class="product-col">
                         <div class="product">
                             <figure class="product-media">
-                                <a href="#">
+                                <a href="{% url 'products:product_detail' item.product.pk %}">
                                     <img src="/media/{{ item.product.image }}" alt="Product image">
                                 </a>
                             </figure>
 
                             <h3 class="product-title">
-                                <a href="{% url 'products:product_detail' item.product.pk %}">{{ item.product.name }}</a>
+                                <a href="{% url 'products:product_detail' item.product.pk %}">
+                                    {{ item.product.name }}</a>
                             </h3><!-- End .product-title -->
                         </div><!-- End .product -->
                     </td>
                     <td class="price-col">{{ item.product.price }} $</td>
                     <td class="stock-col"><span class="in-stock">In stock</span></td>
                     <td class="action-col">
-                        <button class="btn btn-block btn-outline-primary-2"><i class="icon-cart-plus"></i>Add to
-                            Cart
+                        <button class="btn btn-block btn-outline-primary-2">
+                            <a href="{% url 'shopcart:add_item' item.product.id %}">
+                            <i class="icon-cart-plus"></i>Add to
+                            Cart</a>
                         </button>
                     </td>
                     <td class="remove-col">
-                        <button class="btn-remove"><a href="{% url 'wishlist:remove_item' item.product.id %}" class="btn-remove">
+                        <button class="btn-remove"><a href="{% url 'wishlist:remove_item' item.product.id %}"
+                                                      class="btn-remove">
                             <i class="icon-close"></i></a></button>
-
                     </td>
                 </tr>
                 <tr>
-                    {% endfor %}
-                    {% else %}
-                    <td class="product-col">
-                        <div class="product">
-                            <h3 class="product-title">
-                                Список избранного пуст<br><br>
-                                <a href="{% url 'products:index' %}"
-                                   class="btn btn-outline-primary-2"><span>GO SHOP</span><i
-                                        class="icon-long-arrow-right"></i></a>
-                            </h3><!-- End .product-title -->
-                        </div><!-- End .product -->
-                    </td>
-                    {% endif %}
+                {% endfor %}
                 </tbody>
             </table><!-- End .table table-wishlist -->
+            {% else %}
+            <div class="container">
+                <h3 class="product-title">
+                    Список избранного пуст<br><br>
+                    <a href="{% url 'products:index' %}"
+                    class="btn btn-outline-primary-2"><span>GO SHOP</span><i class="icon-long-arrow-right"></i></a>
+                </h3><!-- End .product-title -->
+            </div>
+            <div class="container">
+                <hr class="mb-0">
+            </div><!-- End .container -->
+            {% endif %}
         </div><!-- End .container -->
-    </div><!-- End .page-content -->
+    </div>
 </main><!-- End .main -->
 {% endblock %}

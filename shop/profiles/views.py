@@ -5,6 +5,8 @@ from profiles.forms import UserLoginForm, UserRegistrationForm, UserProfileForm,
 from django.contrib import auth, messages
 from django.contrib.auth import update_session_auth_hash
 from wishlist.models import Wishlist
+from shopcart.models import ShopCart
+
 
 def login(request):
     if request.method == 'POST':
@@ -28,8 +30,9 @@ def register(request):
         if form.is_valid():
             user = form.save()
             messages.success(request, 'Вы успешно зарегистрировались!')
-            if not Wishlist.objects.filter(user=user).exists():
+            if not Wishlist.objects.filter(user=user).exists() and not ShopCart.objects.filter(user=user).exists():
                 Wishlist.objects.create(user=user)
+                ShopCart.objects.create(user=user)
             return HttpResponseRedirect(reverse('profiles:login'))
     else:
         form = UserRegistrationForm()
@@ -53,6 +56,7 @@ def profile(request):
     }
     return render(request, 'profiles/profile.html', context)
 
+
 @login_required
 def change_password(request):
     if request.method == 'POST':
@@ -69,6 +73,7 @@ def change_password(request):
         'password_form': password_form,
     }
     return render(request, 'profiles/password_change.html', context)
+
 
 @login_required
 def logout(request):

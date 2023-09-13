@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}{{ user.username }} Profile {% endblock %}
+{% block title %}Dapper Deals | Интернет-магазин техники Apple | {{ user.username }} profile {% endblock %}
 {% block page_content %}
 <main class="main">
     <div class="page-header text-center" style="background-image: url({%static 'images/page-header-bg.jpg' %})">
@@ -35,7 +35,7 @@
                                 <a class="nav-link" href="{% url 'wishlist:wishlist' %}">My Wishlist</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Shop Cart</a>
+                                <a class="nav-link" href="{% url 'shopcart:shopcart' %}">Shop Cart</a>
                             </li>
                             {% if user.is_superuser or user.is_staff %}
                             <li class="nav-item">

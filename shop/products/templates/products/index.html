@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}DapperDeals - Store{% endblock %}
+{% block title %}Dapper Deals | Интернет-магазин техники Apple | Главная страница{% endblock %}
 
 {% block page_content %}
 
@@ -83,8 +83,10 @@
                             <img src="/media/{{ product.image }}" alt="Product image"
                                  class="product-image">
                         </a>
+                        <div class="product-action-vertical">
+                            <a href="{% url 'wishlist:add_item' product.id %}" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a></div><!-- End .product-action-vertical -->
                         <div class="product-action">
-                            <a href="#" class="btn-product btn-cart"
+                            <a href="{% url 'shopcart:add_item' product.id %}" class="btn-product btn-cart"
                                title="Add to cart"><span>add to cart</span></a>
                         </div><!-- End .product-action -->
                     </figure><!-- End .product-media -->

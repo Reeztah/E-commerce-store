@@ -25,7 +25,11 @@ def del_from_wishlist(request, product_id):
     product = Product.objects.get(id=product_id)
     wishlist = Wishlist.objects.get(user=user)
     wishlist_item = WishlistItem.objects.get(wishlist=wishlist, product=product)
-    wishlist_item.delete()
+
+    try:
+        wishlist_item.delete()
+    except WishlistItem.DoesNotExist:
+        return []
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 

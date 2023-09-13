@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'products.apps.ProductsConfig',
     'profiles.apps.ProfilesConfig',
     'wishlist.apps.WishlistConfig',
+    'shopcart.apps.ShopcartConfig',
 ]
 
 MIDDLEWARE = [
@@ -66,6 +67,7 @@ TEMPLATES = [
                 'products.context_processors.categories',
                 'products.context_processors.footer_filter',
                 'products.context_processors.wishlist_count',
+                'products.context_processors.shopcart_count',
             ],
         },
     },

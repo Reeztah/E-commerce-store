@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}{{ product.name }}{% endblock %}
+{% block title %}Dapper Deals | Интернет-магазин техники Apple | {{ product.name }}{% endblock %}
 {% block page_content %}
 
 <main class="main">
@@ -94,7 +94,7 @@
                                                        max="100" step="1" data-decimals="0" required>
                                             </div><!-- End .product-details-quantity -->
 
-                                            <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                            <a href="{% url 'shopcart:add_item' product.id %}" class="btn-product btn-cart"><span>add to cart</span></a>
                                         </div><!-- End .details-action-col -->
                                         {% if user.is_authenticated %}
                                             {% if product_in_wishlist %}
